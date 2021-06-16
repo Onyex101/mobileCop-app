@@ -1,0 +1,16 @@
+.btn-box {
+  width: 100%;
+  height: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .ion-activatable {
+    position: relative;
+    overflow: hidden;
+  }
+}
+
+ion-content {
+  --background: #f7f7f7;
+}
+

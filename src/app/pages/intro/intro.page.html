@@ -1,0 +1,38 @@
+<ion-content fullscreen class="ion-padding" scroll-y="false">
+  <ion-slides pager="true" [options]="slideOpts">
+
+    <ion-slide>
+      <div class="swiper-slide">
+        <img src="assets/images/intro-1.png" />
+        <p>practical preview of the ionic framework in action</p>
+        <ion-button (click)="next()" fill="outline" color="primary">Next</ion-button>
+      </div>
+    </ion-slide>
+
+    <ion-slide>
+      <div class="swiper-slide">
+        <img src="assets/images/intro-2.png" />
+        <p>open source SDK that enables developers</p>
+        <ion-button (click)="next()" fill="outline" color="primary">Next</ion-button>
+      </div>
+    </ion-slide>
+
+    <ion-slide>
+      <div class="swiper-slide">
+        <img src="assets/images/intro-3.png" />
+        <p>powerful set of services and features built on top of Ionic Framework that brings a totally</p>
+        <ion-button (click)="next()" fill="outline" color="primary">Next</ion-button>
+      </div>
+    </ion-slide>
+
+    <ion-slide>
+      <div class="swiper-slide">
+        <img src="assets/images/intro-6.png" />
+        <!-- <ion-button fill="clear">Continue <ion-icon slot="end" name="arrow-forward"></ion-icon>
+        </ion-button> -->
+        <ion-button (click)="start()" fill="outline" color="primary">Get Started</ion-button>
+      </div>
+    </ion-slide>
+
+  </ion-slides>
+</ion-content>

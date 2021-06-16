@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Home</ion-title>
+    <ion-buttons slot="secondary">
+      <ion-button (click)="logOut()">
+        <ion-icon slot="icon-only" name="log-out" size="large"></ion-icon>
+      </ion-button>
+      <ion-chip (click)="openProfile()">
+        <ion-avatar>
+          <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+        </ion-avatar>
+      </ion-chip>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- <ion-button color="primary" (click)="loadBatch()">load dummy data</ion-button> -->
+  <div class="btn-box">
+    <button class="ion-activatable" (click)="sendAlert()" [style.opacity]="!activateButton ? '0.4' : 1">
+      <ion-img src="assets/images/panic.png"></ion-img>
+      <ion-ripple-effect></ion-ripple-effect>
+    </button>
+  </div>
+
+  <ion-toolbar color="light">
+    <ion-buttons slot="primary">
+      <ion-button color="primary">
+        <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Latest Incidents</ion-title>
+  </ion-toolbar>
+  <ion-list *ngIf="incidents$ | async as reports">
+    <ion-item *ngFor="let report of reports" (click)="openMap(report)">
+      <ion-label>
+        <h3>{{$any(report).incidentDetails}}</h3>
+        <h3>{{$any(report).incidentLocation}}</h3>
+      </ion-label>
+      <p>{{$any(report).timestamp && $any(report).timestamp.toDate().toLocaleTimeString('en-US')}}</p>
+      <div class="ion-float-right">
+        <ion-badge [color]="$any(report).status === 'pending' ? 'warning' : 'success'">{{$any(report).status}}
+        </ion-badge>
+      </div>
+    </ion-item>
+  </ion-list>
+</ion-content>

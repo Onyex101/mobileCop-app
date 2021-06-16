@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Submit Incident</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <form id="form" (ngSubmit)="submitIncident()" [formGroup]="incidentForm">
+    <ion-item class="ion-margin-bottom">
+      <ion-input type="text" placeholder="Location" formControlName="incidentLocation"></ion-input>
+    </ion-item>
+
+    <ion-item class="ion-margin-bottom">
+      <ion-textarea placeholder="Details..." formControlName="incidentDetails" rows="3"></ion-textarea>
+    </ion-item>
+
+    <ion-item class="ion-margin-bottom">
+      <ion-label>Add an image</ion-label>
+      <ion-button color="dark" (click)="pickImage()">
+        <ion-icon slot="icon-only" expand="block" name="camera" size="large"></ion-icon>
+      </ion-button>
+    </ion-item>
+
+
+    <ion-button type="submit" expand="block" color="secondary" shape="round" [disabled]="!incidentForm.valid">Submit</ion-button>
+
+  </form>
+</ion-content>

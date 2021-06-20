@@ -47,7 +47,7 @@ export class HomePage implements OnInit {
           incidentDetails: 'Emergency response needed',
           incidentLocation: '',
           email: this.user.email,
-          status: 'pending'
+          status: 'active'
         });
         console.log('new incident added', res);
         this.activateButton = false;

@@ -39,7 +39,7 @@
       </ion-label>
       <p>{{$any(report).timestamp && $any(report).timestamp.toDate().toLocaleTimeString('en-US')}}</p>
       <div class="ion-float-right">
-        <ion-badge [color]="$any(report).status === 'pending' ? 'warning' : 'success'">{{$any(report).status}}
+        <ion-badge [color]="$any(report).status === 'active' ? 'success' : 'tertiary'">{{$any(report).status}}
         </ion-badge>
       </div>
     </ion-item>

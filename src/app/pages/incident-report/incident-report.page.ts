@@ -96,7 +96,7 @@ export class IncidentReportPage implements OnInit {
         ...formDetails,
         photoUrl: '',
         email: this.user.email,
-        status: 'pending'
+        status: 'active'
       }
     ).then(res => {
       console.log('new document added', res);

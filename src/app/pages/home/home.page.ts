@@ -62,10 +62,10 @@ export class HomePage implements OnInit {
 
   logOut() {
     this.auth.SignOut();
- }
+  }
 
-//  loadBatch() {
-//    this.api.saveBatch();
-//  }
+  //  loadBatch() {
+  //    this.api.saveBatch();
+  //  }
 
 }

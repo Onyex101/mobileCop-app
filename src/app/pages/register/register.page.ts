@@ -50,7 +50,7 @@ export class RegisterPage implements OnInit {
         console.log('error', error);
         const alert = await this.alertCtrl.create({
           header: 'Registration failed',
-          message: 'error',
+          message: error.message,
           buttons: ['OK'],
         });
         await alert.present();

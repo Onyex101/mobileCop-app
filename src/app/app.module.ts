@@ -23,6 +23,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ApiService } from './services/api.service';
 
 import { HttpClientModule } from '@angular/common/http';
+import { Network } from '@ionic-native/network/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -38,7 +39,7 @@ import { HttpClientModule } from '@angular/common/http';
     AngularFireDatabaseModule,
     HttpClientModule,
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, StorageService, Geolocation, Camera, File, ApiService, AuthenticationService],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, StorageService, Network, Geolocation, Camera, File, ApiService, AuthenticationService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

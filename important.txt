@@ -1,0 +1,8 @@
+for brand new installs from git
+platforms/android/app/src/main/AndroidManifest.xml
+add the following lines
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+this prevents firebase error
+"Firebase Authentication FirebaseNetworkException: A network error (such as timeout, interrupted connection or unreachable host) has occurred ionic"

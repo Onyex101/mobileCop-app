@@ -1,11 +1,13 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { File } from '@ionic-native/file/ngx';
 import { ApiService } from './../../services/api.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StorageService } from './../../services/storage.service';
-
+import { AngularFireStorage } from "@angular/fire/storage"
+import { AlertController } from '@ionic/angular';
+import { map, finalize } from "rxjs/operators";
+import { Observable } from "rxjs";
 @Component({
   selector: 'app-incident-report',
   templateUrl: './incident-report.page.html',
@@ -14,13 +16,18 @@ import { StorageService } from './../../services/storage.service';
 export class IncidentReportPage implements OnInit {
   incidentForm: FormGroup;
   user: any;
+  base64Image: string;
+  selectedFile: File = null;
+  downloadURL: Observable<string>;
+  picUrl = '';
   constructor(
     private camera: Camera,
-    private file: File,
     private API: ApiService,
     private fb: FormBuilder,
     private router: Router,
-    private storage: StorageService
+    private storage: StorageService,
+    private af: AngularFireStorage,
+    private alertCtrl: AlertController,
   ) { }
 
   async ngOnInit() {
@@ -31,79 +38,91 @@ export class IncidentReportPage implements OnInit {
     this.user = JSON.parse(await this.storage.get('user'));
   }
 
-  async pickImage() {
-    try {
-      const options: CameraOptions = {
-        quality: 80,
-        destinationType: this.camera.DestinationType.FILE_URI,
-        encodingType: this.camera.EncodingType.JPEG,
-        mediaType: this.camera.MediaType.ALLMEDIA,
-        sourceType : this.camera.PictureSourceType.PHOTOLIBRARY
-      };
-
-      let cameraInfo = await this.camera.getPicture(options);
-      let blobInfo = await this.makeFileIntoBlob(cameraInfo);
-      let uploadInfo: any = await this.API.uploadToFirebase(blobInfo);
-      console.log('File Upload Success', uploadInfo.fileName);
-      alert("File Upload Success " + uploadInfo.fileName);
-    } catch (e) {
-      console.log(e.message);
-      alert("File Upload Error " + e.message);
-    }
+  async takePhoto(sourceType: number) {
+    const options: CameraOptions = {
+      quality: 95,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      sourceType
+    };
+    this.camera.getPicture(options).then((imageData) => {
+      // imageData is either a base64 encoded string or a file URI
+      this.base64Image = 'data:image/jpeg;base64,' + imageData;
+    }, (err) => {
+      // Handle error
+      // console.error(err);
+    });
   }
 
-  // FILE STUFF
-  makeFileIntoBlob(imagePath) {
-    return new Promise((resolve, reject) => {
-      let fileName = '';
-      this.file
-        .resolveLocalFilesystemUrl(imagePath)
-        .then(fileEntry => {
-          let { name, nativeURL } = fileEntry;
+  upload(): void {
+    var currentDate = Date.now();
+    const file: any = this.base64ToImage(this.base64Image);
+    const filePath = `Images/${currentDate}`;
+    const fileRef = this.af.ref(filePath);
 
-          // get the path..
-          let path = nativeURL.substring(0, nativeURL.lastIndexOf("/"));
-          console.log("path", path);
-          console.log("fileName", name);
+    const task = this.af.upload(`Images/${currentDate}`, file);
+    task.snapshotChanges()
+      .pipe(finalize(() => {
+        this.downloadURL = fileRef.getDownloadURL();
+        this.downloadURL.subscribe(downloadURL => {
+          if (downloadURL) {
+            this.showSuccesfulUploadAlert();
+          }
+          // console.log('downloadURL', downloadURL);
+          this.picUrl = downloadURL;
+        });
+      })
+      )
+      .subscribe(url => {
+        if (url) {
+          // console.log('url', url);
+        }
+      });
+  }
 
-          fileName = name;
-
-          // we are provided the name, so now read the file into
-          // a buffer
-          return this.file.readAsArrayBuffer(path, name);
-        })
-        .then(buffer => {
-          // get the buffer and make a blob to be saved
-          let imgBlob = new Blob([buffer], {
-            type: "image/jpeg"
-          });
-          console.log(imgBlob.type, imgBlob.size);
-          resolve({
-            fileName,
-            imgBlob
-          });
-        })
-        .catch(e => reject(e));
+  async showSuccesfulUploadAlert() {
+    const alert = await this.alertCtrl.create({
+      cssClass: 'basic-alert',
+      header: 'Uploaded',
+      subHeader: 'Image uploaded successful to Firebase storage',
+      buttons: ['OK']
     });
+    await alert.present();
+  }
+
+  base64ToImage(dataURI) {
+    const fileDate = dataURI.split(',');
+    // const mime = fileDate[0].match(/:(.*?);/)[1];
+    const byteString = atob(fileDate[1]);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const int8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+      int8Array[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([arrayBuffer], { type: 'image/png' });
+    return blob;
   }
 
   async submitIncident() {
     const formDetails = this.incidentForm.value;
-    console.log(formDetails);
-    
+    // console.log(formDetails);
+
     this.API.addIncident(
       {
         ...formDetails,
-        photoUrl: '',
+        photoUrl: this.picUrl,
         email: this.user.email,
         status: 'active'
       }
     ).then(res => {
-      console.log('new document added', res);
+      // console.log('new document added', res);
       this.incidentForm.reset();
+      this.picUrl = '';
+      this.base64Image = '';
       this.router.navigateByUrl('tabs/home');
     }).catch(error => {
-      console.log('error', error);
+      // console.log('error', error);
     })
   }
 }

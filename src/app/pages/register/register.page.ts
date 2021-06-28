@@ -28,7 +28,7 @@ export class RegisterPage implements OnInit {
   }
 
   async signUp() {
-    console.log('credentials', this.credentials.value);
+    // console.log('credentials', this.credentials.value);
     if (this.credentials.value.password !== this.credentials.value.confirmPassword) {
       const alert = await this.alertCtrl.create({
         header: 'Invalid parameter',
@@ -42,12 +42,12 @@ export class RegisterPage implements OnInit {
       try {
         const regUser = await this.authService.RegisterUser(this.credentials.value.email, this.credentials.value.password);
         await this.authService.SendVerificationMail();
-        console.log('res', regUser);
+        // console.log('res', regUser);
         await loading.dismiss();        
         await this.registerAlert();
       } catch (error) {
         await loading.dismiss();
-        console.log('error', error);
+        // console.log('error', error);
         const alert = await this.alertCtrl.create({
           header: 'Registration failed',
           message: error.message,
@@ -81,7 +81,7 @@ export class RegisterPage implements OnInit {
     await alert.present();
 
     const { role } = await alert.onDidDismiss();
-    console.log('onDidDismiss resolved with role', role);
+    // console.log('onDidDismiss resolved with role', role);
     this.credentials.reset();
     this.router.navigateByUrl('/login', { replaceUrl: true });
   }

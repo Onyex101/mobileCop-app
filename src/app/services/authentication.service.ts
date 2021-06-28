@@ -26,7 +26,7 @@ export class AuthenticationService {
     this.ngFireAuth.authState.subscribe(user => {
       if (user && user.emailVerified) {
         this.userdata = user;
-        console.log('user data', this.userdata);
+        // console.log('user data', this.userdata);
         this.storage.set('user', JSON.stringify(this.userdata));
         this.isAuthenticated.next(true);
       } else {
@@ -91,7 +91,7 @@ export class AuthenticationService {
       this.SetUserData(result.user);
     })
     .catch((error) => {
-      console.log('error', error);
+      // console.log('error', error);
     })
   }
 

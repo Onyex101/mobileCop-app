@@ -24,9 +24,9 @@ export class HomePage implements OnInit {
   async ngOnInit() {
     try {
       this.user = JSON.parse(await this.storage.get('user'));
-      console.log('user', this.user.email);
+      // console.log('user', this.user.email);
     } catch (error) {
-      console.log('error', error);
+      // console.log('error', error);
     }
   }
 
@@ -49,13 +49,13 @@ export class HomePage implements OnInit {
           email: this.user.email,
           status: 'active'
         });
-        console.log('new incident added', res);
+        // console.log('new incident added', res);
         this.activateButton = false;
         setTimeout(() => {
           this.activateButton = true;
         }, 300000) // 300000 milliseconds === 5 minutes
       } catch (error) {
-        console.log('error', error);
+        // console.log('error', error);
       }
     }
   }

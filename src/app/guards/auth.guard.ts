@@ -14,6 +14,10 @@ export class AuthGuard implements CanLoad {
     private router: Router
   ) {}
 
+  /**
+   * checks current authentications status before a user can proceed to the next page
+   * @returns true or false
+   */
   canLoad(): Observable<boolean> {
     return this.authState.isAuthenticated.pipe(
       filter(val => val !== null), // Filter out initial Behaviour subject value

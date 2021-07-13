@@ -27,6 +27,9 @@ export class RegisterPage implements OnInit {
     });
   }
 
+  /**
+   * send form details to firebase for user reistration
+   */
   async signUp() {
     // console.log('credentials', this.credentials.value);
     if (this.credentials.value.password !== this.credentials.value.confirmPassword) {

@@ -23,6 +23,10 @@ export class AuthenticationService {
     public ngZone: NgZone,
     public storage: StorageService
   ) {
+    /**
+     * checks user current authentication state
+     * user can only access protected pages after registration and email verification
+     */
     this.ngFireAuth.authState.subscribe(user => {
       if (user && user.emailVerified) {
         this.userdata = user;

@@ -30,10 +30,6 @@ export class HomePage implements OnInit {
     }
   }
 
-  openProfile() {
-    this.router.navigateByUrl('/profile');
-  }
-
   openMap(pos) {
     this.api.updateLocation(pos);
     this.router.navigateByUrl('/tabs/map');

@@ -6,6 +6,7 @@ import { Geolocation, GeolocationOptions, Geoposition, PositionError } from '@io
 // FIREBASE
 import firebase from 'firebase/app';
 
+/**data model for incidents */
 export interface Iincident {
   photoUrl: string;
   incidentDetails: string;
@@ -21,6 +22,7 @@ export interface Iincident {
   }
 }
 
+/**data model for officer data */
 export interface Iofficer {
   id: string;
   email: string;
@@ -50,10 +52,17 @@ export class ApiService {
     })
   }
 
+/**
+ * share user location across pages
+ */
   updateLocation(location: any) {
     this.locationSource.next(location);
   }
 
+  /**
+   * tracks users current geolocation coordinates
+   * @returns user's longitude and latitude coordinates
+   */
   getUserPosition() {
     this.options = {
       enableHighAccuracy: false
@@ -71,6 +80,12 @@ export class ApiService {
     })
   }
 
+  /**
+   * attaches an officer to the imcident
+   * saves incident data to the database
+   * @param data json data of interface Iincident
+   * @returns saved incident data
+   */
   async addIncident(data: any) {
     try {
       data.coords = {
@@ -93,8 +108,17 @@ export class ApiService {
     }
   }
 
+  /**
+   * retrieves top 10 latest incident collection from the database
+   * realtime updates whenever there is any change
+   */
   getIncidents$ = this.afStore.collection('incidents', ref => ref.orderBy('timestamp', 'desc').limit(10)).valueChanges();
 
+  /**
+   * queries firebase database officers collection, retrieves the 1st officer
+   * whose status is false.
+   * @returns the 1st officer details which meets the filter parameter
+   */
   officerList(): Promise<any> {
     return new Promise((resolve, reject) => {
       this.afStore.collection<Iofficer>('officers', ref => ref.where('status', '==', false).limit(1)).get().subscribe(querySnapshot => {
@@ -108,6 +132,10 @@ export class ApiService {
     });
   }
 
+  /**
+   * test url to save dummy data for officer collection to
+   * firebase database
+   */
   saveBatch() {
     const db = firebase.firestore();
     let batch = db.batch();

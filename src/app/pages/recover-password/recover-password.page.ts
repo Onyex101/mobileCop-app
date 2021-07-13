@@ -37,8 +37,8 @@ export class RecoverPasswordPage implements OnInit {
       await loading.dismiss();
       console.log('error', err);
       const alert = await this.alertCtrl.create({
-        header: 'Login failed',
-        message: 'error',
+        header: 'Error',
+        message: err.message,
         buttons: ['OK'],
       });
       await alert.present();

@@ -23,10 +23,14 @@ export class AuthenticationService {
     public ngZone: NgZone,
     public storage: StorageService
   ) {
+    /**
+     * checks user current authentication state
+     * user can only access protected pages after registration and email verification
+     */
     this.ngFireAuth.authState.subscribe(user => {
       if (user && user.emailVerified) {
         this.userdata = user;
-        console.log('user data', this.userdata);
+        // console.log('user data', this.userdata);
         this.storage.set('user', JSON.stringify(this.userdata));
         this.isAuthenticated.next(true);
       } else {
@@ -91,7 +95,7 @@ export class AuthenticationService {
       this.SetUserData(result.user);
     })
     .catch((error) => {
-      console.log('error', error);
+      // console.log('error', error);
     })
   }
 

@@ -17,7 +17,6 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { StorageService } from './services/storage.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Camera } from '@ionic-native/camera/ngx';
-import { File } from '@ionic-native/file/ngx';
 
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ApiService } from './services/api.service';
@@ -38,7 +37,7 @@ import { HttpClientModule } from '@angular/common/http';
     AngularFireDatabaseModule,
     HttpClientModule,
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, StorageService, Geolocation, Camera, File, ApiService, AuthenticationService],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, StorageService, Geolocation, Camera, ApiService, AuthenticationService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

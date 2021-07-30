@@ -32,15 +32,17 @@ export class LoginPage implements OnInit {
     await loading.present();
     this.authService.SignIn(this.credentials.value.email, this.credentials.value.password).then(async (res) => {
       await loading.dismiss();
-      console.log('log in', res); 
+      console.log('log in', res);
+      this.credentials.reset();
       this.router.navigateByUrl('/tabs/home', { replaceUrl: true });
     })
     .catch(async (err) => {
       await loading.dismiss();
       console.log('error', err);
+      this.credentials.reset();
       const alert = await this.alertCtrl.create({
         header: 'Login failed',
-        message: 'error',
+        message: err.message,
         buttons: ['OK'],
       });
       await alert.present();

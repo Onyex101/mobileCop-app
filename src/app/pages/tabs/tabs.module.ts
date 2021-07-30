@@ -19,10 +19,6 @@ const routes: Routes = [
         path: 'home',
         loadChildren: () => import('../home/home.module').then( m => m.HomePageModule)
       },
-      // {
-      //   path: 'settings',
-      //   loadChildren: () => import('../settings/settings.module').then( m => m.SettingsPageModule)
-      // },
       {
         path: 'incident-report',
         loadChildren: () => import('../incident-report/incident-report.module').then( m => m.IncidentReportPageModule)
@@ -30,6 +26,10 @@ const routes: Routes = [
       {
         path: 'map',
         loadChildren: () => import('../map/map.module').then( m => m.MapPageModule)
+      },
+      {
+        path: 'about',
+        loadChildren: () => import('../about/about.module').then( m => m.AboutPageModule)
       }
     ]
   },

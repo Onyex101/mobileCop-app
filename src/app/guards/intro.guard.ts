@@ -12,6 +12,10 @@ export class IntroGuard implements CanLoad {
 
   constructor(private router: Router, private storage: StorageService) {}
 
+  /**
+   * proceeds to intro page the very first time the app is initialised
+   * @returns true or false
+   */
   async canLoad(): Promise<boolean> {
     const hasSeenIntro = await this.storage.get(INTRO_KEY);
     console.log('hasSeenIntro', hasSeenIntro);

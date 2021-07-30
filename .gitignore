@@ -12,6 +12,8 @@
 Thumbs.db
 UserInterfaceState.xcuserstate
 $RECYCLE.BIN/
+mobilecop.apk
+mobilecop.keystore
 
 *.log
 log.txt

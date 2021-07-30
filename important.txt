@@ -1,0 +1,18 @@
+for brand new installs from git
+platforms/android/app/src/main/AndroidManifest.xml
+add the following lines
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+this prevents firebase error
+"Firebase Authentication FirebaseNetworkException: A network error (such as timeout, interrupted connection or unreachable host) has occurred ionic"
+
+instructions to sign the app
+https://ionicframework.com/docs/v1/guide/publishing.html
+https://enappd.com/blog/publish-ionic-4-apps-on-play-store-and-app-store/94/
+
+"C:\Users\Okoye Onyekachi\Documents\mobileCop\mobilecop App\platforms\android\app\build\outputs\apk\release\app-release-unsigned.apk"
+
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore mobilecop.keystore "C:\Users\Okoye Onyekachi\Documents\mobileCop\mobilecop App\platforms\android\app\build\outputs\apk\release\app-release-unsigned.apk" mobilecop
+
+zipalign -v 4 "C:\Users\Okoye Onyekachi\Documents\mobileCop\mobilecop App\platforms\android\app\build\outputs\apk\release\app-release-unsigned.apk" mobilecop.apk

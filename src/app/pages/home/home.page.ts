@@ -24,14 +24,10 @@ export class HomePage implements OnInit {
   async ngOnInit() {
     try {
       this.user = JSON.parse(await this.storage.get('user'));
-      console.log('user', this.user.email);
+      // console.log('user', this.user.email);
     } catch (error) {
-      console.log('error', error);
+      // console.log('error', error);
     }
-  }
-
-  openProfile() {
-    this.router.navigateByUrl('/profile');
   }
 
   openMap(pos) {
@@ -47,25 +43,25 @@ export class HomePage implements OnInit {
           incidentDetails: 'Emergency response needed',
           incidentLocation: '',
           email: this.user.email,
-          status: 'pending'
+          status: 'active'
         });
-        console.log('new incident added', res);
+        // console.log('new incident added', res);
         this.activateButton = false;
         setTimeout(() => {
           this.activateButton = true;
         }, 300000) // 300000 milliseconds === 5 minutes
       } catch (error) {
-        console.log('error', error);
+        // console.log('error', error);
       }
     }
   }
 
   logOut() {
     this.auth.SignOut();
- }
+  }
 
-//  loadBatch() {
-//    this.api.saveBatch();
-//  }
+  //  loadBatch() {
+  //    this.api.saveBatch();
+  //  }
 
 }

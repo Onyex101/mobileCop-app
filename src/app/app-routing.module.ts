@@ -31,11 +31,6 @@ const routes: Routes = [
   {
     path: 'recover-password',
     loadChildren: () => import('./pages/recover-password/recover-password.module').then( m => m.RecoverPasswordPageModule)
-  },
-  {
-    path: 'profile',
-    loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule),
-    canLoad: [AuthGuard]
   }
 ];
 

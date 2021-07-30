@@ -5,11 +5,6 @@
       <ion-button (click)="logOut()">
         <ion-icon slot="icon-only" name="log-out" size="large"></ion-icon>
       </ion-button>
-      <ion-chip (click)="openProfile()">
-        <ion-avatar>
-          <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
-        </ion-avatar>
-      </ion-chip>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -39,7 +34,7 @@
       </ion-label>
       <p>{{$any(report).timestamp && $any(report).timestamp.toDate().toLocaleTimeString('en-US')}}</p>
       <div class="ion-float-right">
-        <ion-badge [color]="$any(report).status === 'pending' ? 'warning' : 'success'">{{$any(report).status}}
+        <ion-badge [color]="$any(report).status === 'active' ? 'success' : 'tertiary'">{{$any(report).status}}
         </ion-badge>
       </div>
     </ion-item>

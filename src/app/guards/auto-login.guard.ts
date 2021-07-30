@@ -14,6 +14,11 @@ export class AutoLoginGuard implements CanLoad {
     private router: Router
   ) {}
 
+  /**
+   * checks to see if the user has an active login session, if true
+   * login page is bypassed.
+   * @returns true or false
+   */
   canLoad(): Observable<boolean> {
     return this.authState.isAuthenticated.pipe(
       filter(val => val !== null), // Filter out initial Behaviour subject value

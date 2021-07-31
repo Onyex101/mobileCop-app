@@ -26,7 +26,7 @@
     </ion-buttons>
     <ion-title>Latest Incidents</ion-title>
   </ion-toolbar>
-  <ion-list *ngIf="incidents$ | async as reports">
+  <!-- <ion-list *ngIf="incidents$ | async as reports">
     <ion-item *ngFor="let report of reports" (click)="openMap(report)">
       <ion-label>
         <h3>{{$any(report).incidentDetails}}</h3>
@@ -38,5 +38,37 @@
         </ion-badge>
       </div>
     </ion-item>
-  </ion-list>
+  </ion-list> -->
+
+  <div id="faq">
+    <ul *ngIf="incidents$ | async as reports">
+      <li *ngFor="let report of reports">
+        <input type="checkbox" checked>
+        <i></i>
+        <h2>{{$any(report).incidentDetails}}</h2>
+        <div class="time">
+          {{$any(report).timestamp && $any(report).timestamp.toDate().toLocaleTimeString('en-US')}}
+        </div>
+        <div class="badge">
+          <ion-badge [color]="$any(report).status === 'active' ? 'success' : 'tertiary'">{{$any(report).status}}
+          </ion-badge>
+        </div>
+        <div class="grid">
+          <ion-grid>
+            <ion-row>
+              <ion-col size="7">
+                <img *ngIf="$any(report).photoUrl !== ''; else defaultImg" src={{$any(report).photoUrl}} width="250" height="150">
+                <ng-template #defaultImg>
+                  <img src="assets/images/image_icon.png" width="250" height="150">
+                </ng-template>
+              </ion-col>
+              <ion-col size="5">
+                <h5>{{$any(report).incidentLocation}}</h5>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+      </li>
+    </ul>
+  </div>
 </ion-content>

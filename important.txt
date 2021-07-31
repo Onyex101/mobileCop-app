@@ -11,8 +11,14 @@ instructions to sign the app
 https://ionicframework.com/docs/v1/guide/publishing.html
 https://enappd.com/blog/publish-ionic-4-apps-on-play-store-and-app-store/94/
 
-"C:\Users\Okoye Onyekachi\Documents\mobileCop\mobilecop App\platforms\android\app\build\outputs\apk\release\app-release-unsigned.apk"
+Generate keystore file
+keytool -genkey -v -keystore mobilecop.keystore -alias mobilecop -keyalg RSA -keysize 2048 -validity 10000
 
-jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore mobilecop.keystore "C:\Users\Okoye Onyekachi\Documents\mobileCop\mobilecop App\platforms\android\app\build\outputs\apk\release\app-release-unsigned.apk" mobilecop
+keytool -importkeystore -srckeystore mobilecop.keystore -destkeystore mobilecop.keystore -deststoretype pkcs12
 
-zipalign -v 4 "C:\Users\Okoye Onyekachi\Documents\mobileCop\mobilecop App\platforms\android\app\build\outputs\apk\release\app-release-unsigned.apk" mobilecop.apk
+
+"C:\Users\onyek\Documents\PROJECTS\IONIC\mobileCop-app\platforms\android\app\build\outputs\apk\release\app-release-unsigned.apk"
+
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore mobilecop.keystore "C:\Users\onyek\Documents\PROJECTS\IONIC\mobileCop-app\platforms\android\app\build\outputs\apk\release\app-release-unsigned.apk" mobilecop
+
+zipalign -v 4 "C:\Users\onyek\Documents\PROJECTS\IONIC\mobileCop-app\platforms\android\app\build\outputs\apk\release\app-release-unsigned.apk" mobilecop.apk
